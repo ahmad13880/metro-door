@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>Metro Control | نظام المترو</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <section id="loginPage" class="login-page">
+    <div class="login-card">
+      <div class="brand-icon">🚇</div>
+
+      <h1>METRO CONTROL</h1>
+      <p class="muted">نظام إدارة محطة المترو</p>
+
+      <form id="loginForm">
+        <label for="password">كلمة المرور</label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="أدخل كلمة المرور"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" class="btn btn-primary full">
+          تسجيل الدخول
+        </button>
+      </form>
+
+      <p id="loginError" class="error-message" role="alert"></p>
+    </div>
+  </section>
+
+  <!-- APPLICATION -->
+  <section id="appPage" hidden>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon-small">🚇</span>
+        <div>
+          <h2>METRO CONTROL</h2>
+          <small>نظام إدارة محطة المترو</small>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span id="roleLabel" class="role-label"></span>
+        <button id="logoutButton" class="btn btn-dark">
+          تسجيل الخروج
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+
+      <section class="welcome">
+        <div>
+          <h1 id="welcomeTitle">لوحة المترو</h1>
+          <p id="welcomeDescription">
+            متابعة حالة المحطة وحركة الركاب
+          </p>
+        </div>
+
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          لوحة المتابعة
+        </span>
+      </section>
+
+      <!-- STATISTICS -->
+      <section class="stats-grid">
+
+        <article class="stat-card">
+          <div class="stat-icon">💰</div>
+          <p>الرصيد الحالي</p>
+          <h2 id="balanceValue">—</h2>
+          <small>ريال سعودي</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon">👥</div>
+          <p>إجمالي الركاب</p>
+          <h2 id="passengerValue">—</h2>
+          <small>عدد عمليات الدخول</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon">🎫</div>
+          <p>سعر التذكرة</p>
+          <h2 id="ticketPrice">5</h2>
+          <small>ريال سعودي</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon">⚙️</div>
+          <p>حالة النظام</p>
+          <h2 id="systemStatus">غير متصل</h2>
+          <small>اتصال Arduino</small>
+        </article>
+
+      </section>
+
+      <!-- ADMIN ONLY -->
+      <section id="adminArea" hidden>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>التحكم بالأردوينو</h2>
+              <p>الاتصال بلوحة Arduino Uno عبر USB</p>
+            </div>
+            <span class="panel-icon">🔌</span>
+          </div>
+
+          <div class="actions">
+            <button id="connectButton" class="btn btn-primary">
+              اتصال بالأردوينو
+            </button>
+
+            <button id="disconnectButton"
+                    class="btn btn-dark" disabled>
+              قطع الاتصال
+            </button>
+          </div>
+
+          <p id="serialMessage" class="status-message">
+            لم يتم الاتصال بعد
+          </p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>إدارة المحطة</h2>
+              <p>أدوات المسؤول</p>
+            </div>
+            <span class="panel-icon">🛠️</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-secondary" disabled>
+              بيع تذكرة
+            </button>
+
+            <button class="btn btn-secondary" disabled>
+              إضافة رصيد
+            </button>
+
+            <button class="btn btn-secondary" disabled>
+              خصم رصيد
+            </button>
+
+            <button class="btn btn-secondary" disabled>
+              وضع الصيانة
+            </button>
+          </div>
+
+          <p class="notice">
+            سيتم تفعيل أدوات التحكم بعد إكمال ربط الموقع بالأردوينو.
+          </p>
+        </section>
+
+      </section>
+
+      <!-- TRANSACTION LOG -->
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>سجل العمليات</h2>
+            <p>آخر العمليات المسجلة في المحطة</p>
+          </div>
+          <span class="panel-icon">📋</span>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>العملية</th>
+                <th>التفاصيل</th>
+                <th>الوقت</th>
+              </tr>
+            </thead>
+
+            <tbody id="logsTable">
+              <tr>
+                <td colspan="3" class="empty-row">
+                  لا توجد بيانات بعد
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p id="dataMessage" class="data-message">
+        البيانات ستظهر بعد ربط النظام بالأردوينو.
+      </p>
+
+    </main>
+
+    <footer>
+      METRO CONTROL SYSTEM © 2026
+    </footer>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
